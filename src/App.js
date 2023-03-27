@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import "./App.css";
+import Header from "./components/header/Header";
+import Layout from "./components/layout/Layout";
 
 function App() {
+  const [Data, setData] = useState({});
+  const [tasks, settasks] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const respones = await fetch(
+        "https://dev.deepthought.education/assets/uploads/files/files/others/ddugky_project.json"
+      );
+      const data = await respones.json();
+      setData(data);
+      settasks(data.tasks);
+    };
+    fetchData();
+  }, []);
+  const { title } = Data;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Header />
+      <Layout title={title} tasks={tasks} />
     </div>
   );
 }
