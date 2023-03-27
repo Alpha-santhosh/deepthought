@@ -32,5 +32,6 @@ nav{
 
 .li_header{
     list-style: none;
+    cursor: pointer;
 }
 
